@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="/assets/index/css/search.css">
+    <link rel="stylesheet" href="/assets/index/css/ps.css">
+    <title>搜索</title>
+</head>
+<body>
+<div class="title">搜索
+    <span class="backbtn">
+        <a href="/index.php?c=page&m=index" class="back"></a>
+    </span>
+</div>
+<div class="search">
+    <a href="javascript:void(0)" class="type"></a>
+    <form action="/index.php" method="get">
+     <input type="hidden" name="c" value="page">
+     <input type="hidden" name="m" value="search">
+     <input type="text" id="input" name="wd" placeholder="请输入搜索关键词">
+    </form>
+</div>
+<div>
+    <?php if( $num == 0){ ?>
+    <div style="font-size:0.3rem">抱歉，no want you see</div>
+    <?php } ?>
+
+    <?php if( $num != 0){ ?>
+    <div style="font-size:0.3rem"> <?php echo $num ?> 条结果</div>
+    <?php } ?>
+
+    <ul id="ul" style="font-size:0.28rem">
+    <?php foreach($results as $k=>$v) { ?>
+    <li style="font-size:0.28rem"> <?php echo $v['title']?></li>
+    <?php } ?>
+    </ul>
+</div>
+<div>
+    <?php if ($num >4){ ?>
+    <button id="more">加载更多</button>
+    <?php } ?>
+</div>
+
+<script>
+   var page=1;
+    $(function(){
+        $('#more').click(function(){
+
+            $.ajax({
+                url:'/index.php?c=page&m=searchlist&wd=<?php echo $wd ?>&page='+(page +1),
+                success:function(data){
+                    page=page+1;
+                    data=JSON.parse(data);
+                    if(data.length){
+                    data.forEach(v=>{
+                        $(`<li>${v.title}</li>`).appendTo('#ul');
+                    })
+                    }else{
+                        alert('no more');
+                        $('#more').remove();
+                    }
+                }
+            })
+        })
+    })
+
+
+</script>
+
+
+
+<!--<script>-->
+<!--var page=1;-->
+<!--$(function(){-->
+<!--$('#loadmore').click(function(){-->
+<!--<script>-->
+    <!--$.ajax({-->
+        <!--url:'/index.php?c=page&m=search&s=<?php echo $wd?>',-->
+        <!--data:{-->
+            <!--page:page+1-->
+        <!--},-->
+        <!--success:function(data){-->
+            <!--page=page+1;-->
+            <!--data=JSON.parse(data);-->
+            <!--if(data.length){-->
+                <!--data.forEach(v=>{-->
+                    <!--$(`<li>${v.title}</li>`).appendTo('#ul')-->
+
+                <!--})-->
+            <!--}else{-->
+                <!--alert('no more')-->
+            <!--}-->
+
+
+
+        <!--}-->
+
+    <!--})-->
+    <!--})-->
+
+    <!--})-->
+
+
+
+
+<!--</script>-->
+</body>
+</html>

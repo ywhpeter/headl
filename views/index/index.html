@@ -1,0 +1,179 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+
+  <script src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+  <script src="/assets/public/index.js"></script>
+  <!--<link href="https://cdn.bootcss.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet">-->
+  <link rel="stylesheet" href="/assets/index/css/index.css">
+  <link rel="stylesheet" href="/assets/index/css/ps.css">
+</head>
+
+
+<body>
+<div class="box">
+</div>
+
+<div class="interesting ">
+  <div class="fou"><span>x</span></div>
+  <div class="pi"><img src="/assets/index/img/2018-08-15_085605.png" alt=""></div>
+  <div class="more"><p>已加载好您感兴趣的头条</p></div>
+  <div class="open">立即打开</div>
+</div>
+<header>
+
+  <div class="left">
+    <div class="spot"></div>
+  </div>
+  <div class="mid"><i class="iconfont icon-shuaxin"></i></div>
+  <div class="right"><a href="/index.php?c=page&m=search"> </a></div>
+</header>
+<div class="title">
+  <div class="con">
+
+    <ul class="big-box">
+        <?php foreach ($array as $k=>$v){ ?>
+      <li >
+        <a  class="<?php echo $v['id']==$cid?'active':'' ?>" href="/index.php?c=page&m=index&cid=<?php echo $v['id'] ?>"><?php echo $v['name'] ?></a>
+
+        <?php } ?>
+    </ul>
+    <div class="recommend">
+      <p>为你推荐10篇文章</p>
+    </div>
+  </div>
+  <div class="right"><a href="/index.php?c=page&m=category">+</a></div>
+</div>
+<main>
+
+  <ul class="content">
+    <?php foreach($course as $k=>$v){ ?>
+    <?php if($v['mold']==1){ ?>
+    <li>
+      <a href="<?php echo $v['url'] ?>">
+        <div class="left-btn">
+          <h3><?php echo $v['title']?></h3>
+          <div class="set">
+            <span class="stick_label">置顶</span>
+            <span> 央视网新闻</span>
+            <span class=""><?php echo $v['create_time'] ?></span>
+          </div>
+        </div>
+        <div class="right-btn">
+          <img src="<?php echo $v['image'] ?>" alt="">
+        </div>
+      </a>
+      <?php } ?>
+      <?php } ?>
+    </li>
+
+    <?php foreach($course as $k=>$v){ ?>
+    <?php if($v['mold']==2){ ?>
+    <li class="one">
+      <a href="<?php echo $v['url'] ?>">
+        <h3><?php echo $v['title']?></h3>
+        <div class="set">
+          <span class="stick_label">置顶</span>
+          <span>新华社</span>
+          <span><?php echo $v['create_time'] ?></span>
+        </div>
+      </a>
+    </li>
+    <?php } ?>
+    <?php } ?>
+  </ul>
+
+  <?php foreach($course as $k=>$v){ ?>
+  <?php if($v['mold']==3){ ?>
+  <div class="con-type">
+    <a href="<?php echo $v['url'] ?>">
+      <h3><?php echo $v['title']?></h3>
+      <ul class="dis">
+        <li><img src="<?php echo $v['image'] ?>" alt=""></li>
+        <li><img src="<?php echo $v['image'] ?>" alt=""></li>
+        <li><img src="<?php echo $v['image'] ?>" alt=""></li>
+      </ul>
+      <div class="set">
+        <span class="stick_label">置顶</span>
+        <span>新华社</span>
+        <span><?php echo $v['create_time'] ?></span>
+      </div>
+    </a>
+
+  </div>
+  <?php } ?>
+  <?php } ?>
+  <!--<div class="con-type">-->
+    <!--<a href="javascript:void(0)">-->
+      <!--<h3>家里到处都是头发？教你几个方法，分分钟就清理干净！</h3>-->
+      <!--<ul class="dis">-->
+        <!--<li><img src="/assets/index/img/153415086044638c8201322.jpg" alt=""></li>-->
+        <!--<li><img src="/assets/index/img/1534173367094977cba6ee9.jpg" alt=""></li>-->
+        <!--<li><img src="/assets/index/img/1534173367397335d3f7801.jpg" alt=""></li>-->
+      <!--</ul>-->
+      <!--<div class="set">-->
+        <!--<span class="stick_label">置顶</span>-->
+        <!--<span>新华社</span>-->
+        <!--<span>评论 54  7分钟前</span>-->
+      <!--</div>-->
+    <!--</a>-->
+  <!--</div>-->
+
+</main>
+
+  <!--<ul style="display:flex;">-->
+    <!--<?php foreach($array as $k => $v) {?>-->
+    <!--<li class="<?php echo $v['id']==$cid?'active':'' ?>">-->
+      <!--<a href="/index.php?c=page&m=index&cid=<?php echo $v['id'] ?>&page=1"><?php echo $v['name'] ?></a>-->
+      <!---->
+    <!--</li>-->
+    <!--<?php } ?>-->
+  <!--</ul>-->
+  <!--<ul>-->
+    <!--<?php foreach($course as $k => $v) {?>-->
+    <!--<li><?php echo $v['title'] ?></li>-->
+    <!--<?php } ?>-->
+  <!--</ul>-->
+  <!--总条数-->
+<!--<?php echo $num ?>-->
+  <!--<ul id="pagination-demo" class="pagination-sm"></ul>-->
+
+  <script>
+
+    $(function(){
+        $('#pagination-demo').twbsPagination({
+            totalPages:<?php echo $page_total?>,
+            visiblePages: 3,
+                startPage:<?php echo $page?>,
+            onPageClick: function (event, page) {
+
+        if(page !=<?php echo $page?>){
+            location.href="/index.php?c=page&m=index&cid=<?php echo $cid ?>&page="+page;
+        }
+            }
+        })
+
+    })
+  </script>
+
+<script>
+
+  $(function(){
+      $('.left').click(function(){
+          $('.box').addClass('active');
+          $('.interesting').addClass('active')
+      })
+      $('.fou').click(function(){
+          $('.box').removeClass('active');
+          $('.interesting').removeClass('active')
+      })
+
+  })
+</script>
+</body>
+</html>
