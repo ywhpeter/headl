@@ -1,15 +1,6 @@
 <?php
-if(isset($_GET['c'])){
-    $className = $_GET['c'];
-}else{
-    $className='admin';
-}
+$className = $_GET['c'];
 include '../controller/admin/' . $className . '.php';
-if(isset($_GET['m'])){
-    $method = $_GET['m'];
-}else{
-    $method='index';
-}
-
+$method = $_GET['m'];
 $page = new $className();
 $page->$method();
